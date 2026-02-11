@@ -40,6 +40,12 @@ redis-server
 bin/rails server
 ```
 
+   To run in cluster mode with multiple workers (to simulate multiple server instances for Split testing):
+   ```bash
+   WEB_CONCURRENCY=2 bin/rails server
+   ```
+   This will start Puma with 2 worker processes, which can help reproduce issues with Split's multi-server deployment.
+
 4. Visit the application:
 - Demo page: http://localhost:3000
 - Split Dashboard: http://localhost:3000/split
