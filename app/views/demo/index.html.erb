@@ -1,0 +1,77 @@
+<%
+  # Set background color based on A/B test
+  bg_colors = {
+    "white" => "#ffffff",
+    "lightblue" => "#add8e6",
+    "lightgreen" => "#90ee90"
+  }
+
+  # Set font family based on A/B test
+  font_families = {
+    "serif" => "Georgia, serif",
+    "sans-serif" => "Arial, sans-serif",
+    "monospace" => "Courier New, monospace"
+  }
+
+  # Set text alignment based on A/B test
+  text_aligns = {
+    "centered" => "center",
+    "left" => "left",
+    "right" => "right"
+  }
+%>
+
+<div style="background-color: <%= bg_colors[@background_color] %>; min-height: 100vh; padding: 40px; text-align: <%= text_aligns[@layout_style] %>;">
+  <div style="max-width: 800px; margin: 0 auto;">
+    <h1 style="font-family: <%= font_families[@heading_font] %>; font-size: 48px; margin-bottom: 20px;">
+      Split Gem Demo
+    </h1>
+
+    <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px;">
+      <h2 style="font-family: <%= font_families[@heading_font] %>; margin-bottom: 20px;">Current A/B Test Variations</h2>
+
+      <div style="margin-bottom: 15px;">
+        <strong>Background Color:</strong> <%= @background_color %>
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <strong>Heading Font:</strong> <%= @heading_font %>
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <strong>Layout Style:</strong> <%= @layout_style %>
+      </div>
+    </div>
+
+    <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+      <h2 style="font-family: <%= font_families[@heading_font] %>; margin-bottom: 20px;">Test Content</h2>
+
+      <p style="margin-bottom: 20px; line-height: 1.6;">
+        This is a demo page for testing the Split gem. Each time you visit this page with a fresh browser session,
+        you may see different variations of the background color, heading font, and layout alignment.
+      </p>
+
+      <p style="margin-bottom: 30px; line-height: 1.6;">
+        Click the button below to track a goal and see how different variations perform in the Split Dashboard.
+      </p>
+
+      <%= link_to "Click Me to Track Goal!", demo_button_click_path,
+          method: :post,
+          data: { turbo_method: :post },
+          style: "display: inline-block; padding: 15px 30px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" %>
+    </div>
+
+    <div style="margin-top: 30px; padding: 20px; background-color: rgba(255,255,255,0.8); border-radius: 10px;">
+      <p style="font-size: 14px; color: #666;">
+        <strong>Tip:</strong> Access the Split Dashboard at <%= link_to "/split", "/split", target: "_blank" %>
+        (username: admin, password: secret)
+      </p>
+    </div>
+  </div>
+</div>
+
+<% if notice %>
+  <div style="position: fixed; top: 20px; right: 20px; background-color: #4CAF50; color: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+    <%= notice %>
+  </div>
+<% end %>
