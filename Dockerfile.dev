@@ -1,0 +1,26 @@
+FROM ruby:3.3.5-slim
+
+# Install dependencies
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    build-essential \
+    git \
+    libsqlite3-dev \
+    nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install gems
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+# Copy application code
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Start Puma (single worker mode for each instance)
+# -P: Don't create a PID file (avoids conflicts when mounting shared volumes)
+CMD ["sh", "-c", "bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -P"]
